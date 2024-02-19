@@ -29,13 +29,11 @@ module('Integration | Component | add-task', function (hooks) {
     await render(hbs`<AddTask @addTask={{this.addTask}} @updateParams={{this.task}}/>`);
     //await this.pauseTest();
     assert.dom('#taskName').exists();
-    
+
 
     await click('#addButton');
     assert.dom('input#taskName').hasValue('task');
     assert.dom('#taskDate').hasValue('date');
     //assert.ok();
-
-    assert.dom().hasText('template block text');
   });
 });

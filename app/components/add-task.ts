@@ -11,15 +11,16 @@ interface AddTaskComponentSignature{
 }
 
 export default class AddTaskComponent extends Component<AddTaskComponentSignature> {
-  @tracked declare task : {};
+  @tracked task?: Partial<TaskInterface>;
+
   get newTask() {
     return this.args.updateParams;
   }
-  
+
   @action
   returnInputValues(event : Event){
     event.preventDefault();
-    
+
     this.task = {
       name : this.newTask.name,
       date : this.newTask.date

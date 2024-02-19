@@ -10,34 +10,31 @@ interface TaskSignature {
     updateButton : Function;
     checkButton : Function;
   };
-  
+
 }
 
 export default class TaskComponent extends Component<TaskSignature> {
-  myTask = this.args.task;
-
-
   @action
   deleteTask(){
-    this.args.deleteButton(this.myTask);
+    this.args.deleteButton(this.args.task);
   }
 
   @action
   checkTask(){
     let status = "";
-    if(this.myTask.status == "pending"){
+    if(this.args.task.status == "pending"){
       status = "completed";
     }
     else{
       status = "pending"
     }
-    this.args.checkButton(this.myTask.id,status);
-    console.log(this.myTask);
+    this.args.checkButton(this.args.task.id,status);
+    console.log(this.args.task);
   }
 
   @action
   modifyTask(){
-    this.args.updateButton(this.myTask);
+    this.args.updateButton(this.args.task);
     console.log("ok ici first");
   }
 }

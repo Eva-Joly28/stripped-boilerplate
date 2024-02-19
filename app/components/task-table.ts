@@ -10,28 +10,12 @@ interface TaskTableSignature {
       deleteTask : Function;
       modifyTask : Function;
       tasks : TaskInterface[];
-    };   
+    };
 }
 
 export default class TaskTableComponent extends Component<TaskTableSignature> {
-
-    isVisible : string = "visible";
-    tasks : TaskInterface[] = this.args.tasks;
-
-
-    @action
-    receiveArray(){
-        if(this.tasks.length > 0){
-            this.isVisible = "invisible";
-        }
-        else{
-            this.isVisible = "visible";
-        }
-    }
-
     get emptyVisibility(){
-        this.receiveArray();
-        return this.isVisible;
+      return this.args.tasks.length > 0 ? "invisible" : "visible";
     }
 
     @action

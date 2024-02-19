@@ -29,7 +29,5 @@ module('Integration | Component | task', function (hooks) {
     assert.dom('tr#tdName').hasValue('task');
 
     await click('button#checkButton');
-
-    assert.dom().hasText('template block text');
   });
 });

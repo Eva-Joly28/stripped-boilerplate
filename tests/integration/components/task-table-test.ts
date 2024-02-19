@@ -15,8 +15,5 @@ module('Integration | Component | task-table', function (hooks) {
     assert.dom('table').exists();
     assert.dom('thead').exists();
     assert.dom('table p').exists();
-
-
-    assert.dom().hasText('template block text');
   });
 });

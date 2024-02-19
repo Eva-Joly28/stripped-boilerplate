@@ -8,15 +8,14 @@ import type { TaskInterface } from 'ember-boilerplate/interfaces/task-interface'
 import { t } from 'ember-intl';
 
 interface TasksContainerSignature {
-  
+
 }
 
 export default class TasksContainerComponent extends Component<TasksContainerSignature> {
   @tracked alertText : string = "Task added successfully";
   @tracked visibility : string = "invisible";
   @tracked tasksList : TaskInterface[] = [];
-  @tracked previousTasks : TaskInterface[] = [];
-  @tracked declare fulltask : TaskInterface;
+  @tracked fulltask? : TaskInterface;
   @tracked menu : string = "invisible";
   @tracked newTask : TaskInterface = {
             id : 0,
@@ -25,6 +24,7 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
             status : ""
   };
   idCount : number = 0;
+  @tracked filter: string = "all";
 
   @action
   onClickOutside(){
@@ -36,7 +36,10 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
     addTask(task : TaskInterface){
       this.newTask.name = "";
       this.newTask.date ="";
-      if(this.tasksList.filter((i) => i == task).length == 0){
+
+      const taskExist = this.tasksList.some((t) => t.name === task.name);
+      // .some
+      if(!taskExist){
         this.idCount +=1;
         if(task.date == ''){
           task.date = "No due date"
@@ -65,7 +68,7 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
 
     @action
     checkTask(taskId : number, status:string){
-      let task : TaskInterface = this.tasksList.find(t => t.id == taskId)!!;
+      let task : TaskInterface = this.tasksList.find(t => t.id == taskId)!;
       let updateStatus = {
         status : status
       }
@@ -89,23 +92,28 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
       later(() => {this.visibility="invisible"}, 3000);
     }
 
+    get filteredTasks(){
+      return this.tasksList.filter((t) => t.status === this.filter || this.filter === "all")
+    }
+
     @action
     filterAll(){
-      this.tasksList = this.tasksList.map((t) => (t ? {...t, ...{hidden:false} }: t));
+      this.filter = "all";
+      this.menu = "invisible";
     }
 
     @action
     filterPending(){
-      this.tasksList = this.tasksList.map((t) => (t ? {...t, ...{hidden:false} }: t));
-      this.tasksList = this.tasksList.map((t) => (t.status !== "pending"? {...t, ...{hidden:true} }: t))
+      this.filter = "pending";
+      this.menu = "invisible";
     }
 
     @action
     filterCompleted(){
-      this.tasksList = this.tasksList.map((t) => (t ? {...t, ...{hidden:false} }: t));
-      this.tasksList = this.tasksList.map((t) => (t.status !== "completed"? {...t, ...{hidden:true} }: t))
+      this.filter = "completed";
+      this.menu = "invisible";
     }
-  
+
 
     @action
     updatetask(task : TaskInterface){
@@ -123,7 +131,6 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
         this.menu = "visible";
       }
       console.log(this.menu);
-      this.previousTasks = this.tasksList.map((t) => t);
     }
 
 
