@@ -215,6 +215,9 @@ devDependencies:
   ember-cli-terser:
     specifier: ~4.0.2
     version: 4.0.2
+  ember-click-outside-modifier:
+    specifier: ^4.1.0
+    version: 4.1.0(ember-source@5.6.0)
   ember-concurrency:
     specifier: ~3.1.1
     version: 3.1.1(@babel/core@7.23.9)(ember-source@5.6.0)
@@ -8467,6 +8470,16 @@ packages:
       - velocityjs
       - walrus
       - whiskers
+    dev: true
+
+  /ember-click-outside-modifier@4.1.0(ember-source@5.6.0):
+    resolution: {integrity: sha512-8jlUgj2io2r7EyfnYKnRDVsUpnj1i4+cjiSultGdu56hTayIbHhhmvpos60cjccmFeHVkbmL5W6r7RUZiAV9jg==}
+    dependencies:
+      '@embroider/addon-shim': 1.8.7
+      ember-modifier: 4.1.0(ember-source@5.6.0)
+    transitivePeerDependencies:
+      - ember-source
+      - supports-color
     dev: true
 
   /ember-click-outside@6.1.0(ember-source@5.6.0):

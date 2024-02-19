@@ -1,0 +1,17 @@
+<table class="w-full text-sm text-left rtl:text-center text-gray-500 dark:text-gray-400 m-3 ">
+  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
+    <tr>
+      <th class="px-6 py-3">Task</th>
+      <th class="px-6 py-3">Due date</th>
+      <th class="px-6 py-3">Status</th>
+      <th class="px-6 py-3">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <p class="{{this.emptyVisibility}} text-gray-400 font-bold text-center text-2xl py-5 font-mono w-full" >No task found</p>
+    {{#each @tasks as |task|}}
+      <Task @task={{task}} @checkButton={{this.checkButton}} @deleteButton={{this.deleteButton}} @updateButton={{this.updateTask}}/>
+    {{/each}}
+  </tbody>
+  
+</table>

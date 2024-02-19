@@ -200,3 +200,7 @@ table.yeti-table thead th.yeti-table-sorted-desc::after {
 table.yeti-table .yeti-table-sortable {
   white-space: nowrap;
 }
+
+.bg-blue-950 {
+  background-color: rgb(23 37 84);
+}

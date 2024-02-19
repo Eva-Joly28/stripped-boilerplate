@@ -1,0 +1,23 @@
+<div class="mx-80 my-96 bg-gray-800 box-border px-10 rounded-2xl min-w-48 min-h-96 py-6" >
+    <p class="w-full p-4 text-black bg-white rounded-lg shadow dark:text-black dark:bg-green-300 duration-1000 {{this.visibility}}" role="alert">
+        {{this.alertText}}
+    </p>
+  <h2 class="mx-80 font-mono ">Todo List</h2>
+  <AddTask @addTask={{this.addTask}}  @updateParams={{this.newTask}}/>
+  <div class="flex justify-between mt-6">
+    <div class="relative inline-block ">
+      <button type="button" class="bg-rose-500 box-border px-8 py-4 ml-14 rounded-lg min-w-12 min-h-8 font-mono bg-opacity-45" aria-expanded="true" aria-haspopup="true" {{on 'click' this.menuVisibility}}>Filter</button>
+
+      <div class="absolute z-10 mt-2 w-48 origin-top-right rounded-md bg-rose-900 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none {{this.menu}}" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" >
+        <div class="py-1" role="none">
+          <button type="button" class="text-black hover:bg-rose-700 font-mono block w-full text-left px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0" {{on 'click'this.filterAll}}>All</button>
+          <button type="button" class="text-black hover:bg-rose-700 font-mono block w-full text-left px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" {{on 'click'this.filterPending}}>pending</button>
+          <button type="button" class="text-black hover:bg-rose-700 font-mono block w-full text-left px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2" {{on 'click'this.filterCompleted}}>completed</button>
+        </div>
+      </div>
+    </div>
+    
+    <button type="button" class="bg-red-900 box-border px-8 py-4 mr-14 rounded-lg min-w-12 min-h-8 font-mono" {{on 'click' this.deleteAllTask}}> Delete all</button>
+  </div>
+  <TaskTable @tasks={{this.tasksList}} @validateTask={{this.checkTask}} @deleteTask={{this.deleteTask}} @modifyTask={{this.updatetask}} />
+</div>

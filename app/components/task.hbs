@@ -1,0 +1,18 @@
+<tr>
+    <td class="px-6 py-3">{{@task.name}}</td>
+    <td class="px-6 py-3">{{@task.date}}</td>
+    <td class="px-6 py-3">{{@task.status}}</td>
+    <td class="px-6 py-3">
+      <div class="flex">
+        <button type="button" class="bg-red-950 px-4 py-2 rounded-lg mr-3" {{on 'click' this.checkTask}}>
+          <img src="assets\icons\icon-check.svg" alt="check icon" class="size-3.5">
+        </button>
+        <button type="button" class="bg-red-300 px-4 py-2 rounded-lg mr-3" {{on 'click' this.modifyTask}} >
+          <img src="assets\icons\modify.svg" alt="check icon" class="size-3.5">
+        </button>
+        <button type="button" class="bg-primary px-4 py-2 rounded-lg" {{on 'click' this.deleteTask}}>
+          <img src="assets\icons\supp.svg" alt="check icon" class="size-3.5">
+        </button>
+      </div>
+    </td>
+</tr>

@@ -100,6 +100,7 @@
     "ember-cli-page-object": "2.2.0",
     "ember-cli-postcss": "~8.2.0",
     "ember-cli-terser": "~4.0.2",
+    "ember-click-outside-modifier": "^4.1.0",
     "ember-concurrency": "~3.1.1",
     "ember-exam": "^9.0.0",
     "ember-fetch": "~8.1.2",

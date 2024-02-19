@@ -31,6 +31,11 @@ module.exports = {
       transparent: colors.transparent,
       red: colors.red,
       gray: colors.gray,
+      green:colors.green,
+      blue : colors.blue,
+      rose : colors.rose,
+      orange :colors.orange,
+      amber : colors.amber,
     },
   },
 };
