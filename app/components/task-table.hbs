@@ -10,7 +10,9 @@
   <tbody>
     <p class="{{this.emptyVisibility}} text-gray-400 font-bold text-center text-2xl py-5 font-mono w-full" >No task found</p>
     {{#each @tasks as |task|}}
-      <Task @task={{task}} @checkButton={{this.checkButton}} @deleteButton={{this.deleteButton}} @updateButton={{this.updateTask}}/>
+      {{#unless task.hidden }}
+        <Task @task={{task}} @checkButton={{this.checkButton}} @deleteButton={{this.deleteButton}} @updateButton={{this.updateTask}}/>
+      {{/unless}}
     {{/each}}
   </tbody>
   

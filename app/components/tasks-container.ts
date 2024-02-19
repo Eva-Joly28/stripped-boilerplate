@@ -17,7 +17,6 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
   @tracked tasksList : TaskInterface[] = [];
   @tracked previousTasks : TaskInterface[] = [];
   @tracked declare fulltask : TaskInterface;
-  tasks
   @tracked menu : string = "invisible";
   @tracked newTask : TaskInterface = {
             id : 0,
@@ -92,20 +91,21 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
 
     @action
     filterAll(){
-      this.tasksList = this.previousTasks;
+      this.tasksList = this.tasksList.map((t) => (t ? {...t, ...{hidden:false} }: t));
     }
 
     @action
     filterPending(){
-      this.tasksList = this.previousTasks;
-      this.tasksList = this.tasksList.filter((i) => i.status == "pending")
+      this.tasksList = this.tasksList.map((t) => (t ? {...t, ...{hidden:false} }: t));
+      this.tasksList = this.tasksList.map((t) => (t.status !== "pending"? {...t, ...{hidden:true} }: t))
     }
 
     @action
     filterCompleted(){
-      this.tasksList = this.previousTasks;
-      this.tasksList = this.tasksList.filter((i) => i.status == "completed")
+      this.tasksList = this.tasksList.map((t) => (t ? {...t, ...{hidden:false} }: t));
+      this.tasksList = this.tasksList.map((t) => (t.status !== "completed"? {...t, ...{hidden:true} }: t))
     }
+  
 
     @action
     updatetask(task : TaskInterface){

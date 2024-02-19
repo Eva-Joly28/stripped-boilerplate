@@ -3,4 +3,5 @@ export interface TaskInterface{
     name : String;
     date : String;
     status : string;
+    hidden?: boolean;
 }

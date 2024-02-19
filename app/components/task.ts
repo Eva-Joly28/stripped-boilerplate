@@ -16,6 +16,7 @@ interface TaskSignature {
 export default class TaskComponent extends Component<TaskSignature> {
   myTask = this.args.task;
 
+
   @action
   deleteTask(){
     this.args.deleteButton(this.myTask);
