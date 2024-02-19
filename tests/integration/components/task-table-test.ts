@@ -12,14 +12,10 @@ module('Integration | Component | task-table', function (hooks) {
 
     await render(hbs`<TaskTable />`);
 
-    assert.dom().hasText('');
+    assert.dom('table').exists();
+    assert.dom('thead').exists();
+    assert.dom('table p').exists();
 
-    // Template block usage:
-    await render(hbs`
-      <TaskTable>
-        template block text
-      </TaskTable>
-    `);
 
     assert.dom().hasText('template block text');
   });
