@@ -1,4 +1,4 @@
-import { currentURL,visit } from '@ember/test-helpers';
+import { click, currentURL,fillIn,visit, type Target } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 
 import { setupApplicationTest } from 'ember-boilerplate/tests/helpers';
@@ -17,5 +17,19 @@ module('Acceptance | index page', function (hooks) {
     assert.dom('button#filterButton').hasText('Filter');
     assert.dom('button#deleteButton').exists();
     assert.dom('button#deleteButton').hasText('Delete all');
+    
+  const task = document.getElementById('taskName') as Target;
+  fillIn(task, "ma tache")
+  const date = document.getElementById('taskDate') as Target;
+  fillIn(date,"2003-09-28")
+  
+  await click('#addButton');
+  
+  assert.dom(".tdName").exists();
+  assert.dom(".tdName").hasText('ma tache');
+
+  await click('#deleteButton');
+  assert.dom(".tdName").doesNotExist();
+  
   });
 });
