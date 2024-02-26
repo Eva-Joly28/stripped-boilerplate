@@ -29,12 +29,10 @@ export default class TaskComponent extends Component<TaskSignature> {
       status = "pending"
     }
     this.args.checkButton(this.args.task.id,status);
-    console.log(this.args.task);
   }
 
   @action
   modifyTask(){
     this.args.updateButton(this.args.task);
-    console.log("ok ici first");
   }
 }

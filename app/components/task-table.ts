@@ -7,7 +7,6 @@ interface TaskTableSignature {
     // The arguments accepted by the component
     Args: {
       validateTask : Function;
-      deleteTask : Function;
       modifyTask : Function;
       tasks : TaskInterface[];
     };
@@ -21,18 +20,10 @@ export default class TaskTableComponent extends Component<TaskTableSignature> {
     @action
     checkButton(taskId : number,status:string){
         this.args.validateTask(taskId,status);
-        console.log(taskId);
-        console.log(status);
-    }
-
-    @action
-    deleteButton(task : TaskInterface){
-        this.args.deleteTask(task);
     }
 
     @action
     updateTask(task : TaskInterface){
         this.args.modifyTask(task);
-        console.log("ok ici 2nd");
     }
 }

@@ -1,5 +1,5 @@
 export interface TaskInterface{
-    id : number;
+    id?: number;
     name : String;
     date : String;
     status : string;

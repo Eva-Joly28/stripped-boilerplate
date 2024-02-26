@@ -1,24 +1,27 @@
 /* eslint-disable ember/no-runloop */
-import { A } from '@ember/array';
+import { destroy } from '@ember/destroyable';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type { TaskInterface } from 'ember-boilerplate/interfaces/task-interface';
-import { t } from 'ember-intl';
+import type Store from 'ember-boilerplate/services/store';
 
 interface TasksContainerSignature {
-
+  Args: {
+    tasksArray : TaskInterface[];
+  }
 }
 
 export default class TasksContainerComponent extends Component<TasksContainerSignature> {
+  @service store? : Store;
   @tracked alertText : string = "Task added successfully";
   @tracked visibility : string = "invisible";
-  @tracked tasksList : TaskInterface[] = [];
-  @tracked fulltask? : TaskInterface;
+  @tracked tasksList : TaskInterface[] = [...this.args.tasksArray]??[]
+  @tracked fulltask? :  Partial<TaskInterface>;
   @tracked menu : string = "invisible";
   @tracked newTask : TaskInterface = {
-            id : 0,
             name : "",
             date : "",
             status : ""
@@ -26,100 +29,94 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
   idCount : number = 0;
   @tracked filter: string = "all";
 
-  @action
-  onClickOutside(){
-    this.menu = "invisible";
-  }
-
-
     @action
     addTask(task : TaskInterface){
-      this.newTask.name = "";
-      this.newTask.date ="";
-
-      const taskExist = this.tasksList.some((t) => t.name === task.name);
+      const taskExist = this.args.tasksArray.some((t) => t.id === task.id);
       // .some
       if(!taskExist){
-        this.idCount +=1;
         if(task.date == ''){
           task.date = "No due date"
         }
+
         this.fulltask = {
-            id : this.idCount,
             name : task.name,
             date : task.date,
             status : "pending"
         }
-        this.tasksList =[...this.tasksList,this.fulltask]
-        console.log(this.tasksList);
-      }
-      else{
-        let updatedTask = {
-          name : task.name,
-          date : task.date
+        this.store?.createRecord('task',this.fulltask).save();
+        this.newTask = {
+          name : "",
+          date : "",
+          status : ""
         }
-        this.tasksList = this.tasksList.map((t) => (t=== task ? { ...t, ...updatedTask } : t));
+        this.tasksList = [task,...this.tasksList]
+
+        this.visibility = "visible";
+        // eslint-disable-next-line ember/no-runloop
+        later(() => {this.visibility="invisible"}, 3000);
       }
 
-      this.visibility = "visible";
-      // eslint-disable-next-line ember/no-runloop
-      later(() => {this.visibility="invisible"}, 3000);
+      else{
+        let updatedTask = {
+           name : task.name,
+           date : task.date
+        }
+
+        this.store?.findRecord('task',task.id!).then(function(task){
+          task.name = updatedTask.name;
+          task.date = updatedTask.date;
+          console.log(task);
+          task.save();
+        });
+      }  
     }
 
     @action
-    checkTask(taskId : number, status:string){
-      let task : TaskInterface = this.tasksList.find(t => t.id == taskId)!;
-      let updateStatus = {
-        status : status
-      }
-      this.tasksList = this.tasksList.map((t) => (t=== task ? { ...t, ...updateStatus } : t))
-      console.log(this.tasksList);
+    checkTask(taskId : number, status:string){ 
+      this.store?.findRecord('task',taskId).then(function(task){
+          const param = {status : status };
+          task.status = status;
+          task.save(param);
+      });   
+
     }
 
     @action
     deleteAllTask(){
-      this.tasksList = [];
+      this.args.tasksArray.map((task) => this.store?.peekRecord('task',task.id!).destroyRecord() )
+      this.tasksList.splice(0, this.tasksList.length)
+      this.tasksList = [...this.tasksList]
       this.visibility = "visible";
       this.alertText = "all tasks have been deleted successfully"
       later(() => {this.visibility="invisible"}, 3000);
     }
 
     @action
-    deleteTask(task : TaskInterface){
-      this.tasksList = this.tasksList.filter((i) => i !== task)
+    deleteTask(task : TaskInterface, index : number){
+      const myTask = this.store?.peekRecord('task',task.id!);
+      myTask.destroyRecord();
       this.visibility = "visible";
       this.alertText = "task deleted successfully"
       later(() => {this.visibility="invisible"}, 3000);
+      this.filter = "all"
+      this.tasksList.splice(index, 1);
+      console.log(index)
+      this.tasksList = [...this.tasksList]
     }
 
     get filteredTasks(){
-      return this.tasksList.filter((t) => t.status === this.filter || this.filter === "all")
+      return this.tasksList?.filter((t) => t.status === this.filter || this.filter === "all")
     }
 
     @action
-    filterAll(){
-      this.filter = "all";
-      this.menu = "invisible";
+    filtering(state : string){
+      this.filter = state;
+      this.menu = "invisible"
     }
-
-    @action
-    filterPending(){
-      this.filter = "pending";
-      this.menu = "invisible";
-    }
-
-    @action
-    filterCompleted(){
-      this.filter = "completed";
-      this.menu = "invisible";
-    }
-
 
     @action
     updatetask(task : TaskInterface){
       this.newTask = task;
-      console.log("ok ici 3rd");
-      console.log(this.newTask);
     }
 
     @action
@@ -130,8 +127,6 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
       else{
         this.menu = "visible";
       }
-      console.log(this.menu);
     }
-
 
 }

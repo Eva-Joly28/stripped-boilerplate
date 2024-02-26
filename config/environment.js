@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function (environment) {
-  const host = 'http://localhost:8080';
-  const namespace = 'api/v1';
+  const host = 'http://localhost:3000';
+  const namespace = '';
 
   let ENV = {
     modulePrefix: 'ember-boilerplate',

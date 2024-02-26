@@ -12,11 +12,12 @@
       class="{{this.emptyVisibility}}
         text-gray-400 font-bold text-center text-2xl py-5 font-mono w-full"
     >No task found</p>
-    {{#each @tasks as |task|}}
+    {{#each @tasks as |task index|}}
       <Task
         @task={{task}}
+        @index={{index}}
         @checkButton={{this.checkButton}}
-        @deleteButton={{this.deleteButton}}
+        @deleteTask={{@deleteTask}}
         @updateButton={{this.updateTask}}
       />
     {{/each}}

@@ -1,8 +1,8 @@
-import JSONAPISerializer from '@ember-data/serializer/json-api';
+import JSONSerializer from '@ember-data/serializer/json';
 
 import type { Snapshot } from '@ember-data/store';
 
-export default class Application extends JSONAPISerializer {
+export default class Application extends JSONSerializer {
   serializeAttribute(
     snapshot: Snapshot,
     json: Record<string, unknown>,

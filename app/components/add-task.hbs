@@ -1,10 +1,10 @@
 <form >
   <div class="flex mx-8 my-8 ">
     <label class="input_block mr-7" >
-      <Input placeholder="Add a task" @type="text" @value={{this.newTask.name}} id="taskName"/>
+      <Input placeholder="Add a task" @type="text" @value={{this.newTask.name }} id="taskName"/>
     </label>
     <label class="input_block mr-7" >
-      <Input placeholder="dd-mm-yyyy" @type="date" @value={{this.newTask.date}} id="taskDate"/>
+      <Input placeholder="dd-mm-yyyy" @type="date" @value={{ this.newTask.date}} id="taskDate"/>
     </label>
     <button type="button" id="addButton" title="ajouter cette tâche" class="bg-red-400 hover:bg-blue-800 rounded-lg me-2 dark:hover:bg-red-900" {{on 'click' this.returnInputValues}}>
       <svg class="w-9 h-6" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -18,43 +18,8 @@
         aria-haspopup="true"
         {{on "click" this.menuVisibility}}
       >Filter</button>
-
-      <div
-        class="absolute z-10 mt-2 w-48 origin-top-right rounded-md bg-rose-900 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
-          {{this.menu}}"
-        role="menu"
-        aria-orientation="vertical"
-        aria-labelledby="menu-button"
-        tabindex="-1"
-      >
-        <div class="py-1" role="none">
-          <button
-            type="button"
-            class="text-black hover:bg-rose-700 font-mono block w-full text-left px-4 py-2 text-sm"
-            role="menuitem"
-            tabindex="-1"
-            id="menu-item-0"
-            {{on "click" this.filterAll}}
-          >All</button>
-          <button
-            type="button"
-            class="text-black hover:bg-rose-700 font-mono block w-full text-left px-4 py-2 text-sm"
-            role="menuitem"
-            tabindex="-1"
-            id="menu-item-1"
-            {{on "click" this.filterPending}}
-          >pending</button>
-          <button
-            type="button"
-            class="text-black hover:bg-rose-700 font-mono block w-full text-left px-4 py-2 text-sm"
-            role="menuitem"
-            tabindex="-1"
-            id="menu-item-2"
-            {{on "click" this.filterCompleted}}
-          >completed</button>
-        </div>
-      </div>
-    </div>
+      <TasksFilter @menu={{this.menu}} @filter={{this.filtering}}/>    
+  </div>
 
     <button
       id="deleteButton"

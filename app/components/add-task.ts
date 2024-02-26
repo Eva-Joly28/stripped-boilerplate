@@ -1,4 +1,5 @@
 import { action } from '@ember/object';
+import { fillIn, type Target } from '@ember/test-helpers';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type { TaskInterface } from 'ember-boilerplate/interfaces/task-interface';
@@ -22,11 +23,12 @@ export default class AddTaskComponent extends Component<AddTaskComponentSignatur
     event.preventDefault();
 
     this.task = {
+      id : this.newTask.id,
       name : this.newTask.name,
       date : this.newTask.date
     };
-
+    this.newTask.name = ""
+    console.log(this.task.id);
     this.args.addTask(this.task);
-    console.log(this.task)
   }
 }

@@ -10,7 +10,7 @@
         <button type="button" class="bg-red-300 px-4 py-2 rounded-lg mr-3" {{on 'click' this.modifyTask}} >
           <img src="assets\icons\modify.svg" alt="check icon" class="size-3.5">
         </button>
-        <button type="button" class="bg-primary px-4 py-2 rounded-lg" {{on 'click' this.deleteTask}}>
+        <button type="button" class="bg-primary px-4 py-2 rounded-lg" {{on 'click' (fn @deleteTask @task @index)}}>
           <img src="assets\icons\supp.svg" alt="check icon" class="size-3.5">
         </button>
       </div>
