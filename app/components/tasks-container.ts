@@ -6,6 +6,7 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type { TaskInterface } from 'ember-boilerplate/interfaces/task-interface';
+import type TaskModel from 'ember-boilerplate/models/task';
 import type Store from 'ember-boilerplate/services/store';
 
 interface TasksContainerSignature {
@@ -15,7 +16,7 @@ interface TasksContainerSignature {
 }
 
 export default class TasksContainerComponent extends Component<TasksContainerSignature> {
-  @service store? : Store;
+  @service declare store: Store;
   @tracked alertText : string = "Task added successfully";
   @tracked visibility : string = "invisible";
   @tracked tasksList : TaskInterface[] = [...this.args.tasksArray]??[]
@@ -30,7 +31,7 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
   @tracked filter: string = "all";
 
     @action
-    addTask(task : TaskInterface){
+    addTask(task : TaskInterface){ // L'action est bcp trop longue au niveau du code. Faire 2 méthodes privées dans le component pour le cas où une tâche existe ou quand une tâche n'existe pas.
       const taskExist = this.args.tasksArray.some((t) => t.id === task.id);
       // .some
       if(!taskExist){
@@ -43,7 +44,12 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
             date : task.date,
             status : "pending"
         }
-        this.store?.createRecord('task',this.fulltask).save();
+        // const taskOun = this.store.createRecord('task');
+        // taskOun.setProperties({
+        //   name: task.name,
+
+        // })
+        this.store.createRecord('task',this.fulltask).save();
         this.newTask = {
           name : "",
           date : "",
@@ -69,8 +75,8 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
           console.log(task);
           task.save();
         });
-        
-      }  
+
+      }
       this.newTask = {
         name : "",
         date : "",
@@ -79,18 +85,20 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
     }
 
     @action
-    checkTask(taskId : number, status:string){ 
+    checkTask(taskId : number, status:string){
       this.store?.findRecord('task',taskId).then(function(task){
           const param = {status : status };
           task.status = status;
           task.save(param);
-      });   
+      });
+      // On peut adapter ça autrement et que ça soit plus clair.
 
     }
 
     @action
     deleteAllTask(){
-      this.args.tasksArray.map((task) => this.store?.peekRecord('task',task.id!).destroyRecord() )
+      // tasksArray === TaskModel[]
+      this.args.tasksArray.map((task) => this.store?.peekRecord('task',task.id!).destroyRecord() ) // Le peekRecord est utile ? Ce qu'on reçoit de la route est déjà un model
       this.tasksList.splice(0, this.tasksList.length)
       this.tasksList = [...this.tasksList]
       this.visibility = "visible";

@@ -27,7 +27,7 @@ export const Routes = [
     route: "/tasks/:id",
     controller: TaskController,
     action: "updateTask"
-}, 
+},
 {
     method: "delete",
     route: "/tasks/:id",

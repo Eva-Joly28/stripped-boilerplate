@@ -23,10 +23,11 @@ export default class AddTaskComponent extends Component<AddTaskComponentSignatur
     event.preventDefault();
 
     this.task = {
-      id : this.newTask.id,
+      id : this.newTask.id, // this.newTask.id n'existe pas et ne doit pas être créé dans le front. C'est le backend qui génére l'ID de son côté.
       name : this.newTask.name,
       date : this.newTask.date
     };
+    // Si cette méthode est utilisée pour le create/update, le nommage du getter 'newTask' n'est pas correct.
     this.newTask.name = ""
     console.log(this.task.id);
     this.args.addTask(this.task);

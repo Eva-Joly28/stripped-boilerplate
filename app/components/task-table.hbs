@@ -8,6 +8,7 @@
     </tr>
   </thead>
   <tbody>
+    {{!-- #each a la possibilité d'avoir un "else" qui permet de gérer le cas où il n'y a rien dans le tableau --}}
     <p
       class="{{this.emptyVisibility}}
         text-gray-400 font-bold text-center text-2xl py-5 font-mono w-full"
@@ -20,6 +21,9 @@
         @deleteTask={{@deleteTask}}
         @updateButton={{this.updateTask}}
       />
+    {{else}}
+
+      Affiché quand pas d'elements dans le tableau
     {{/each}}
   </tbody>
 
