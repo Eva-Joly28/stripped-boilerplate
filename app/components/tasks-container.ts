@@ -19,7 +19,7 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
   @tracked alertText : string = "Task added successfully";
   @tracked visibility : string = "invisible";
   @tracked tasksList : TaskInterface[] = [...this.args.tasksArray]??[]
-  @tracked fulltask? :  Partial<TaskInterface>;
+  @tracked fulltask? :  TaskInterface;
   @tracked menu : string = "invisible";
   @tracked newTask : TaskInterface = {
             name : "",
@@ -49,7 +49,8 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
           date : "",
           status : ""
         }
-        this.tasksList = [task,...this.tasksList]
+        this.tasksList = [this.fulltask,...this.tasksList]
+        console.log(task)
 
         this.visibility = "visible";
         // eslint-disable-next-line ember/no-runloop
@@ -68,7 +69,13 @@ export default class TasksContainerComponent extends Component<TasksContainerSig
           console.log(task);
           task.save();
         });
+        
       }  
+      this.newTask = {
+        name : "",
+        date : "",
+        status : ""
+      }
     }
 
     @action
