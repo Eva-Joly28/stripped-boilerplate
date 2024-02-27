@@ -24,21 +24,24 @@ export class TaskController{
     }
 
     async addTask(request: Request, response: Response, next: NextFunction) {
-        const { name, date, status } = request.body;
+        const { name, date, status } = request.body
 
         const task = Object.assign(new Task(), {
             name,
             date,
             status
         })
-
+        
+        console.log(task)
         await this.taskRepository.save(task)
         return "task added to the database"
     }
 
     async updateTask(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id);
-        const { name, date, status } = request.body;
+        console.log(request);
+        const {name, date, status } = request.body;
+        //const {status} = request.body
 
         let taskToUpdate = await this.taskRepository.findOneBy({ id })
 

@@ -4,12 +4,19 @@ import { Request, Response } from "express"
 import { AppDataSource } from "./data-source"
 import { Routes } from "./routes"
 import { User } from "./entity/User"
+import * as cors from 'cors'
+
 
 AppDataSource.initialize().then(async () => {
 
+    const corsOptions = {
+        origin: 'http://localhost:4200',
+      };
+
     // create express app
     const app = express()
-    app.use(bodyParser.json())
+    app.use(express.json())
+    app.use(cors(corsOptions))
 
     // register express routes from defined application routes
     Routes.forEach(route => {
@@ -31,6 +38,6 @@ AppDataSource.initialize().then(async () => {
     app.listen(3000)
     
 
-    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results")
+    console.log("Express server has started on port 3000. Open http://localhost:3000/tasks to see results")
 
 }).catch(error => console.log(error))

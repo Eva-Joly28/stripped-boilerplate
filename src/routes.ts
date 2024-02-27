@@ -1,12 +1,7 @@
 import { TaskController } from "./controller/TaskController"
 import { UserController } from "./controller/UserController"
 
-export const Routes = [{
-    method: "get",
-    route: "/users",
-    controller: UserController,
-    action: "all"
-},
+export const Routes = [
 {
     method: "get",
     route: "/tasks",
@@ -16,26 +11,26 @@ export const Routes = [{
 
 {
     method: "get",
-    route: "/task/:id",
+    route: "/tasks/:id",
     controller: TaskController,
     action: "getTaskById"
 },
 
 {
     method: "post",
-    route: "/task",
+    route: "/tasks",
     controller: TaskController,
     action: "addTask"
 },
 {
-    method: "put",
-    route: "/task/:id",
+    method: "patch",
+    route: "/tasks/:id",
     controller: TaskController,
     action: "updateTask"
 }, 
 {
     method: "delete",
-    route: "/task/:id",
+    route: "/tasks/:id",
     controller: TaskController,
     action: "deleteById"
 },
